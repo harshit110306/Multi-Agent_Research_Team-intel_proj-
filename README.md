@@ -1,323 +1,293 @@
-# 🧠 Multi-Agent Research Team (MART)
+# ⚛ QuantumSage – AI Research Command Center
 
-> An Autonomous AI-Powered Research Collaboration System
-> Simulating a Real-World Research Lab Using Multi-Agent Intelligence
+> A Cinematic Multi-Agent AI Research Platform for Document Review & Research Generation
 
----
-
-## 🚀 Overview
-
-**Multi-Agent Research Team (MART)** is an AI-driven collaborative research system where multiple intelligent agents work together to conduct end-to-end research — from literature review to model development and final research paper generation.
-
-Unlike traditional AI assistants that only summarize content, MART simulates a **real research laboratory**, where specialized agents:
-
-* Generate hypotheses
-* Detect research gaps
-* Analyze data
-* Build and optimize models
-* Debate methodologies
-* Audit bias and ethics
-* Generate IEEE-style research papers
-
-This system demonstrates advanced concepts in:
-
-* Multi-Agent Systems
-* Autonomous AI
-* Distributed Intelligence
-* Research Automation
-* Responsible AI
+![Python](https://img.shields.io/badge/Python-3.10+-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-green)
+![LLM](https://img.shields.io/badge/LLM-Llama3.2-purple)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
 ---
 
-## 🎯 Problem Statement
+## 🧠 Overview
 
-Modern research workflows are:
+QuantumSage is a futuristic AI-powered Research Operating System that:
 
-* Time-consuming
-* Fragmented
-* Manually coordinated
-* Difficult to reproduce
-
-Researchers spend excessive time on:
-
-* Literature review
-* Experiment tuning
-* Reproducibility checks
-* Documentation
-
-MART addresses this by creating a **collaborative AI research ecosystem**.
+- 📄 Reviews and analyzes research documents
+- 📝 Generates structured research from a topic
+- 🤖 Simulates a multi-agent research team
+- 📊 Scores publication readiness
+- 🧪 Suggests methodology improvements & roadmap
+- ⚛ Provides a cinematic AI experience
 
 ---
 
-## 🏗️ System Architecture
+# 🚀 Features
+
+## 🔹 Multi-Agent Simulation
+Simulates:
+- 📚 Literature Expert
+- 🧪 Methodology Expert
+- 📊 Data Scientist
+- 🏆 Publication Advisor
+- 🧠 Research Companion
+
+---
+
+## 🔹 Document Review Mode
+Upload:
+- PDF
+- DOCX
+- TXT
+
+QuantumSage:
+- Extracts text
+- Analyzes structure
+- Detects research gaps
+- Suggests improvements
+- Provides roadmap
+- Scores publication readiness
+
+---
+
+## 🔹 Research Generation Mode
+Enter a topic and QuantumSage:
+- Generates structured research
+- Suggests datasets & models
+- Recommends validation methods
+- Provides experimental insights
+
+---
+
+## 🔹 Cinematic AI Interface
+- 🌌 Animated sci-fi background
+- ⚛ Research flow tracker
+- 🤖 Multi-agent chat simulation
+- 📊 Animated score bars
+- 🎉 Confetti celebration for high scores
+
+---
+
+# 📂 Project Structure
+
+```
+
+QuantumSage/
+│
+├── app.py
+├── agents/
+├── llm/
+├── memory/
+├── storage/
+├── static/
+│   └── index.html
+├── assets/
+├── requirements.txt
+└── README.md
+
+````
+
+---
+
+# 🛠 Installation Guide
+
+## 1️⃣ Clone Repository
+
+```bash
+git clone https://github.com/yourusername/QuantumSage.git
+cd QuantumSage
+````
+
+---
+
+## 2️⃣ Create Virtual Environment (Recommended)
+
+### Windows
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+### Mac/Linux
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+---
+
+## 3️⃣ Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+If you don’t have requirements.txt, install manually:
+
+```bash
+pip install fastapi uvicorn python-multipart PyPDF2 python-docx requests
+```
+
+---
+
+# 🤖 LLM Setup
+
+QuantumSage supports:
+
+* Offline Mode (Llama 3.2 via Ollama)
+* Optional Online Mode
+
+---
+
+## 🔹 Offline LLM Setup (Recommended)
+
+### Install Ollama
+
+Download from:
+[https://ollama.com](https://ollama.com)
+
+### Pull Llama Model
+
+```bash
+ollama pull llama3.2
+```
+
+### Start Ollama
+
+```bash
+ollama run llama3.2
+```
+
+Or keep Ollama running in background.
+
+---
+
+# ▶️ Run QuantumSage
+
+```bash
+uvicorn app:app --reload
+```
+
+Open browser:
+
+```
+http://127.0.0.1:8000
+```
+
+---
+
+# 🌐 Optional Online LLM Setup
+
+If using ScaleDown or OpenAI-compatible API:
+
+1. Add API key inside your LLM controller
+2. Pass provider="online"
+
+You can modify:
+
+```python
+LLMController(provider="online")
+```
+
+---
+
+# 🖼 Adding Demo Screenshots
+
+Create folder:
+
+```
+assets/
+```
+
+Add:
+
+* dashboard.png
+* document_review.png
+* research_output.png
+* score.png
+* demo.gif
+
+Then reference in README:
+
+```markdown
+![Dashboard](assets/dashboard.png)
+```
+
+---
+
+# 🎥 How to Record Demo GIF
+
+Use:
+
+* ScreenToGif (Windows)
+* OBS Studio
+* Kap (Mac)
+
+Record:
+
+* Upload document
+* Show analysis
+* Show score animation
+
+Export as:
+
+```
+assets/demo.gif
+```
+
+---
+
+# 🧠 System Architecture
 
 ```
 User Input
-     ↓
-Project Manager Agent
-     ↓
-Task Distribution Layer
-     ↓
------------------------------------------
-| Literature Agent | Data Agent         |
-| Model Agent      | Ethics Agent       |
-| Debate Agent     | Report Agent       |
------------------------------------------
-     ↓
-Shared Memory (Vector Database)
-     ↓
-Final Research Output
+   ↓
+Document Extractor
+   ↓
+ScaleDown Compression (Optional)
+   ↓
+LLM Controller (Offline / Online)
+   ↓
+Multi-Agent Simulation
+   ↓
+Structured Research Output
+   ↓
+Cinematic UI Rendering
 ```
 
 ---
 
-## 🤖 Core Agents
+# 🔮 Future Enhancements
 
-### 1️⃣ Project Manager Agent
-
-* Breaks research topic into subtasks
-* Assigns responsibilities
-* Monitors progress
-* Resolves conflicts
-
----
-
-### 2️⃣ Literature Review Agent
-
-* Searches research papers
-* Extracts methodologies
-* Summarizes findings
-* Builds citation graph
+* 🔄 Real-time token streaming
+* 📊 Research visualization graphs
+* 📁 Export PDF reports
+* 🌍 Cloud deployment
+* 🔐 Authentication system
+* 🤖 Voice AI interaction
 
 ---
 
-### 3️⃣ Research Gap Detection Engine
+# 👨‍💻 Author
 
-* Compares existing studies
-* Identifies underexplored areas
-* Detects missing variables
-* Suggests novel research directions
+Harshit Bodala
 
 ---
 
-### 4️⃣ Hypothesis Generator Agent
+# ⭐ Support
 
-* Proposes testable hypotheses
-* Suggests experimental setups
-* Recommends evaluation strategies
+If you like this project:
 
----
-
-### 5️⃣ Data Analysis Agent
-
-* Cleans datasets
-* Performs EDA
-* Suggests feature engineering
-* Identifies statistical patterns
+⭐ Star the repository
+🍴 Fork it
+🚀 Share it
 
 ---
 
-### 6️⃣ Model Builder Agent
+# 📜 License
 
-* Selects optimal ML/DL models
-* Performs hyperparameter tuning
-* Runs autonomous experiment loop
-* Tracks performance evolution
-
----
-
-### 7️⃣ Multi-Agent Debate Module
-
-* Allows agents to defend competing approaches
-* Uses evidence-based scoring
-* Simulates peer-review discussion
-* Supervisor agent selects final decision
-
----
-
-### 8️⃣ Bias & Ethics Audit Agent
-
-* Checks dataset imbalance
-* Detects bias
-* Flags data leakage
-* Generates Responsible AI report
-
----
-
-### 9️⃣ Report Generation Agent
-
-* Compiles structured research paper
-* Generates:
-
-  * Abstract
-  * Literature Review
-  * Methodology
-  * Experiments
-  * Results
-  * Future Work
-* Formats in IEEE style
-
----
-
-## 🔄 Autonomous Research Loop
-
-MART continuously improves results:
+MIT License
 
 ```
-Train → Evaluate → Optimize → Retrain → Compare → Select Best Model
-```
-
-This simulates iterative research experimentation.
-
----
-
-## 🧠 Key Unique Features
-
-✔ Hypothesis Generation
-✔ Research Gap Detection
-✔ Multi-Agent Debate System
-✔ Autonomous Experiment Optimization
-✔ Citation Network Intelligence
-✔ Responsible AI Audit
-✔ Self-Improving Research Memory
-
----
-
-## 🛠️ Tech Stack
-
-| Layer               | Technology               |
-| ------------------- | ------------------------ |
-| Backend             | Python (FastAPI / Flask) |
-| Agent Framework     | LangGraph / CrewAI       |
-| LLM                 | Llama 3 / Mistral        |
-| Vector Database     | FAISS / ChromaDB         |
-| ML Framework        | Scikit-learn / PyTorch   |
-| Database            | MongoDB                  |
-| Frontend (Optional) | React                    |
-| Experiment Tracking | MLflow                   |
-
----
-
-## 📂 Project Structure
-
-```
-multi_agent_research_team/
-│
-├── agents/
-│   ├── project_manager.py
-│   ├── literature_agent.py
-│   ├── gap_detector.py
-│   ├── hypothesis_agent.py
-│   ├── data_agent.py
-│   ├── model_agent.py
-│   ├── debate_agent.py
-│   ├── ethics_agent.py
-│   └── report_agent.py
-│
-├── memory/
-│   └── vector_store.py
-│
-├── communication/
-│   └── message_bus.py
-│
-├── experiments/
-│   └── experiment_tracker.py
-│
-├── app.py
-├── requirements.txt
-└── README.md
-```
-
----
-
-## 🔬 Example Use Case
-
-Input:
-
-```
-"Research on accident severity prediction using live traffic data."
-```
-
-MART will:
-
-1. Analyze existing literature
-2. Detect gaps in current approaches
-3. Propose new hypotheses
-4. Suggest dataset & features
-5. Train multiple models
-6. Conduct internal debate
-7. Audit bias
-8. Generate final research paper draft
-
----
-
-## 📊 Citation Graph & Knowledge Mapping
-
-The system builds a research knowledge graph to:
-
-* Identify influential papers
-* Detect emerging trends
-* Map methodology clusters
-
----
-
-## 🧪 Responsible AI & Reproducibility
-
-MART includes:
-
-* Dataset bias detection
-* Model fairness evaluation
-* Reproducibility checker
-* Performance comparison tracking
-
----
-
-## 📈 Future Enhancements
-
-* Cross-domain knowledge transfer agent
-* Self-evolving agents
-* Cloud deployment with Kubernetes
-* Real-time collaborative research dashboard
-* Integration with arXiv & Semantic Scholar APIs
-
----
-
-## 🎓 Academic & Industrial Relevance
-
-This project demonstrates concepts in:
-
-* Multi-Agent Systems
-* Distributed AI
-* Autonomous Research Systems
-* Human-in-the-Loop AI
-* Responsible AI
-* AI for Scientific Discovery
-
-Suitable for:
-
-* Research Internships
-* Intel AI Projects
-* Hackathons
-* Academic Conferences
-* Final Year Projects
-
----
-
-## 👨‍💻 Author
-
-Harshit Bodala(Student)
-
----
-
-## 📜 License
-
-This project is intended for academic and research purposes.
-
----
-
-# 🌟 Why This Project Stands Out
-
-MART is not just an AI assistant.
-
-It is a **simulated autonomous AI research laboratory** capable of collaborative reasoning, hypothesis generation, ethical auditing, and scientific documentation.
-
