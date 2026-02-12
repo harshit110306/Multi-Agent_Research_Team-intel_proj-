@@ -11,81 +11,73 @@
 
 ## 🧠 Overview
 
-QuantumSage is a futuristic AI-powered Research Operating System that:
+**QuantumSage** is a futuristic AI-powered Research Operating System designed to streamline the academic and scientific research process. It orchestrates a team of specialized AI agents to analyze topics, review documents, and generate comprehensive research reports with a cinematic user experience.
 
-- 📄 Reviews and analyzes research documents
-- 📝 Generates structured research from a topic
-- 🤖 Simulates a multi-agent research team
-- 📊 Scores publication readiness
-- 🧪 Suggests methodology improvements & roadmap
-- ⚛ Provides a cinematic AI experience
+### Key Capabilities:
+
+- 📄 **Document Analysis**: Reviews PDF/DOCX files for executive summaries and validation.
+- 📝 **Research Generation**: Creates structured research papers from a simple topic prompt.
+- 🤖 **Multi-Agent Simulation**: Visualizes the collaboration between specialized AI agents.
+- 📊 **Scoring System**: Evaluates publication readiness (0-100).
+- ⚛ **Cinematic UI**: Features a glassmorphism design with animated interactions.
 
 ---
 
 # 🚀 Features
 
-## 🔹 Multi-Agent Simulation
-Simulates:
-- 📚 Literature Expert
-- 🧪 Methodology Expert
-- 📊 Data Scientist
-- 🏆 Publication Advisor
-- 🧠 Research Companion
+## 🔹 Multi-Agent Team
 
----
+The system simulates a collaborative environment with the following agents:
+
+- **📚 Literature Agent**: Conducts deep literature reviews.
+- **🧪 Hypothesis Agent**: Generates testable research hypotheses.
+- **📊 Model Agent**: Simulates model training and validation.
+- **⚖️ Debate Agent**: Critiques findings and evaluates accuracy.
+- **📝 Report Agent**: Compiles everything into an IEEE-style paper.
+- **🧠 Companion Agent**: Provides interactive feedback and guidance.
 
 ## 🔹 Document Review Mode
-Upload:
-- PDF
-- DOCX
-- TXT
 
-QuantumSage:
-- Extracts text
-- Analyzes structure
-- Detects research gaps
-- Suggests improvements
-- Provides roadmap
-- Scores publication readiness
+Upload your research papers (**PDF, DOCX, TXT**) to receive:
 
----
+- Executive Summary
+- Strengths & Weaknesses Analysis
+- Methodology Evaluation
+- Publication Readiness Score
+- Improvement Roadmap
 
 ## 🔹 Research Generation Mode
-Enter a topic and QuantumSage:
-- Generates structured research
-- Suggests datasets & models
-- Recommends validation methods
-- Provides experimental insights
 
----
+Enter a research topic, and the agent team will:
 
-## 🔹 Cinematic AI Interface
-- 🌌 Animated sci-fi background
-- ⚛ Research flow tracker
-- 🤖 Multi-agent chat simulation
-- 📊 Animated score bars
-- 🎉 Confetti celebration for high scores
+- Perform a literature search.
+- Formulate hypotheses.
+- Simulate experimental results.
+- Generate a full research report.
 
 ---
 
 # 📂 Project Structure
 
 ```
-
-QuantumSage/
+Multi-Agent_Research_Team/
 │
-├── app.py
-├── agents/
-├── llm/
-├── memory/
-├── storage/
-├── static/
+├── app.py                 # Main FastAPI application entry point
+├── agents/                # Logic for individual AI agents
+│   ├── literature_agent.py
+│   ├── hypothesis_agent.py
+│   ├── model_agent.py
+│   ├── debate_agent.py
+│   ├── report_agent.py
+│   └── companion_agent.py
+├── llm/                   # LLM Controller (Ollama/OpenAI)
+├── memory/                # Shared memory for agent collaboration
+├── storage/               # Session management (JSON saving/loading)
+├── static/                # Frontend assets (HTML/CSS/JS)
 │   └── index.html
-├── assets/
-├── requirements.txt
-└── README.md
-
-````
+├── requirements.txt       # Python dependencies
+└── README.md              # Project documentation
+```
 
 ---
 
@@ -94,11 +86,9 @@ QuantumSage/
 ## 1️⃣ Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/QuantumSage.git
-cd QuantumSage
-````
-
----
+git clone https://github.com/harshit110306/Multi-Agent_Research_Team-intel_proj-.git
+cd Multi-Agent_Research_Team-intel_proj-
+```
 
 ## 2️⃣ Create Virtual Environment (Recommended)
 
@@ -116,178 +106,69 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
----
-
 ## 3️⃣ Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-If you don’t have requirements.txt, install manually:
-
-```bash
-pip install fastapi uvicorn python-multipart PyPDF2 python-docx requests
-```
+_Note: Ensure you have `PyPDF2`, `python-docx`, `fastapi`, `uvicorn`, and `python-multipart` installed._
 
 ---
 
 # 🤖 LLM Setup
 
-QuantumSage supports:
+QuantumSage is designed to work primarily in **Offline Mode** using **Ollama** for privacy and cost-efficiency, but can be configured for online providers.
 
-* Offline Mode (Llama 3.2 via Ollama)
-* Optional Online Mode
+## 🔹 Offline Setup (Recommended)
 
----
-
-## 🔹 Offline LLM Setup (Recommended)
-
-### Install Ollama
-
-Download from:
-[https://ollama.com](https://ollama.com)
-
-### Pull Llama Model
-
-```bash
-ollama pull llama3.2
-```
-
-### Start Ollama
-
-```bash
-ollama run llama3.2
-```
-
-Or keep Ollama running in background.
+1. **Install Ollama**: Download from ollama.com.
+2. **Pull the Model**:
+   ```bash
+   ollama pull llama3.2
+   ```
+3. **Start Ollama**:
+   ```bash
+   ollama serve
+   ```
 
 ---
 
-# ▶️ Run QuantumSage
+# ▶️ Run Application
+
+Start the FastAPI server:
+
+```bash
+python app.py
+```
+
+Or using Uvicorn directly:
 
 ```bash
 uvicorn app:app --reload
 ```
 
-Open browser:
-
-```
-http://127.0.0.1:8000
-```
-
----
-
-# 🌐 Optional Online LLM Setup
-
-If using ScaleDown or OpenAI-compatible API:
-
-1. Add API key inside your LLM controller
-2. Pass provider="online"
-
-You can modify:
-
-```python
-LLMController(provider="online")
-```
-
----
-
-# 🖼 Adding Demo Screenshots
-
-Create folder:
-
-```
-assets/
-```
-
-Add:
-
-* dashboard.png
-* document_review.png
-* research_output.png
-* score.png
-* demo.gif
-
-Then reference in README:
-
-```markdown
-![Dashboard](assets/dashboard.png)
-```
-
----
-
-# 🎥 How to Record Demo GIF
-
-Use:
-
-* ScreenToGif (Windows)
-* OBS Studio
-* Kap (Mac)
-
-Record:
-
-* Upload document
-* Show analysis
-* Show score animation
-
-Export as:
-
-```
-assets/demo.gif
-```
-
----
-
-# 🧠 System Architecture
-
-```
-User Input
-   ↓
-Document Extractor
-   ↓
-ScaleDown Compression (Optional)
-   ↓
-LLM Controller (Offline / Online)
-   ↓
-Multi-Agent Simulation
-   ↓
-Structured Research Output
-   ↓
-Cinematic UI Rendering
-```
-
----
-
-# 🔮 Future Enhancements
-
-* 🔄 Real-time token streaming
-* 📊 Research visualization graphs
-* 📁 Export PDF reports
-* 🌍 Cloud deployment
-* 🔐 Authentication system
-* 🤖 Voice AI interaction
+Open your browser and navigate to:
+**`http://127.0.0.1:8000`**
 
 ---
 
 # 👨‍💻 Author
 
-Harshit Bodala
+**Harshit Bodala**
 
 ---
 
 # ⭐ Support
 
-If you like this project:
+If you find this project useful for your research or development:
 
-⭐ Star the repository
-🍴 Fork it
-🚀 Share it
+- ⭐ Star the repository on GitHub
+- 🍴 Fork it and contribute
+- 🚀 Share it with your network
 
 ---
 
 # 📜 License
 
 MIT License
-
-```
