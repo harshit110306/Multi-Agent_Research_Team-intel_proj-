@@ -23,6 +23,12 @@
 
 ---
 
+## 🎬 Demo
+
+![QuantumSage Demo](assets/demo.png)
+
+---
+
 # 🚀 Features
 
 ## 🔹 Multi-Agent Team
