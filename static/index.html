@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantumSage AI | Advanced Research Companion</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --sidebar-bg: rgba(15, 23, 42, 0.95);
+            --card-bg: rgba(30, 41, 59, 0.5);
+            --primary: #38bdf8;
+            --primary-hover: #0ea5e9;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border: #1e293b;
+            --user-msg-bg: #38bdf8;
+            --user-msg-text: #0f172a;
+            --agent-msg-bg: rgba(30, 41, 59, 0.8);
+        }
+
+        * { box-sizing: border-box; outline: none; }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            height: 100vh;
+            overflow: hidden;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
+        }
+
+        /* Layout */
+        .app-container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 40px;
+            padding-left: 10px;
+        }
+
+        .brand i { font-size: 1.5rem; }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--primary);
+        }
+
+        .nav-item.active {
+            background: var(--primary);
+            color: var(--bg-color);
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: rgba(15, 23, 42, 0.3);
+        }
+
+        /* Header */
+        .top-bar {
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .page-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        /* Progress Steps */
+        .research-flow {
+            display: flex;
+            gap: 4px;
+            background: var(--border);
+            padding: 4px;
+            border-radius: 20px;
+        }
+
+        .step {
+            padding: 6px 16px;
+            border-radius: 16px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            transition: all 0.3s;
+        }
+
+        .step.active {
+            background: var(--bg-color);
+            color: var(--primary);
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Chat Area */
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            scroll-behavior: smooth;
+        }
+
+        .chat-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .chat-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .chat-container::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        .message {
+            display: flex;
+            gap: 16px;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.2rem;
+        }
+
+        .avatar.user { background: var(--user-msg-bg); color: var(--user-msg-text); }
+        .avatar.agent { background: var(--border); color: var(--primary); border: 1px solid var(--primary); }
+
+        .msg-content {
+            flex: 1;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .msg-content h1, .msg-content h2, .msg-content h3 { margin-top: 0; color: var(--primary); }
+        .msg-content p { margin-bottom: 1em; }
+        .msg-content code { background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px; font-family: monospace; color: #f472b6; }
+        .msg-content pre { background: #020617; padding: 15px; border-radius: 8px; overflow-x: auto; border: 1px solid var(--border); }
+
+        /* Input Area */
+        .input-wrapper {
+            padding: 20px 30px;
+            background: var(--bg-color);
+            border-top: 1px solid var(--border);
+        }
+
+        .input-box {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 8px;
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            transition: border-color 0.2s;
+        }
+
+        .input-box:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+        }
+
+        textarea {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            padding: 12px;
+            resize: none;
+            min-height: 24px;
+            max-height: 200px;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .action-btn {
+            background: var(--primary);
+            color: var(--bg-color);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .action-btn:disabled {
+            background: var(--text-muted);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* File Upload Styling */
+        .file-upload-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            border: 2px dashed var(--border);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .file-upload-label:hover {
+            border-color: var(--primary);
+            background: rgba(56, 189, 248, 0.05);
+            color: var(--primary);
+        }
+
+        .file-upload-label i { font-size: 2rem; margin-bottom: 10px; }
+
+        /* Score Bar */
+        .score-container {
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 10px;
+            border: 1px solid var(--border);
+        }
+        .score-bar-bg {
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 8px 0;
+        }
+        .score-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #22c55e, #38bdf8);
+            width: 0%;
+            transition: width 1s ease-out;
+        }
+
+        .hidden { display: none !important; }
+        
+        /* Loading Indicator */
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 10px 0;
+        }
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--text-muted);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="brand">
+            <i class="fa-solid fa-atom"></i>
+            QuantumSage
+        </div>
+        
+        <div class="nav-menu">
+            <div class="nav-item active" onclick="switchMode('topic')" id="nav-topic">
+                <i class="fa-solid fa-magnifying-glass-chart"></i>
+                <span>Deep Research</span>
+            </div>
+            <div class="nav-item" onclick="switchMode('document')" id="nav-doc">
+                <i class="fa-solid fa-file-contract"></i>
+                <span>Document Review</span>
+            </div>
+        </div>
+
+        <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid var(--border);">
+            <div class="nav-item">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                <span>History</span>
+            </div>
+            <div class="nav-item">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="top-bar">
+            <div class="page-title" id="pageTitle">New Research Project</div>
+            
+            <div class="research-flow" id="flowIndicator">
+                <div class="step active" id="step1">Input</div>
+                <div class="step" id="step2">Analysis</div>
+                <div class="step" id="step3">Report</div>
+            </div>
+        </div>
+
+        <!-- Chat Area -->
+        <div class="chat-container" id="chat">
+            <!-- Welcome Message -->
+            <div class="message">
+                <div class="avatar agent"><i class="fa-solid fa-robot"></i></div>
+                <div class="msg-content">
+                    <h3>Welcome to QuantumSage AI</h3>
+                    <p>I am your advanced research companion. I can help you with:</p>
+                    <ul>
+                        <li>Deep literature reviews and hypothesis generation.</li>
+                        <li>Analyzing complex documents (PDF, DOCX).</li>
+                        <li>Simulating debates and validating models.</li>
+                    </ul>
+                    <p>Select a mode from the sidebar to begin.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="input-wrapper">
+            
+            <!-- Topic Mode Input -->
+            <div id="topicMode" class="input-box">
+                <textarea id="topicInput" placeholder="Describe your research topic in detail..." rows="1" oninput="autoResize(this)"></textarea>
+                <button class="action-btn" onclick="runResearch()" id="sendBtn">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+
+            <!-- Document Mode Input -->
+            <div id="documentMode" class="hidden">
+                <label for="fileInput" class="file-upload-label">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <span id="fileName">Click to upload PDF or DOCX</span>
+                    <input type="file" id="fileInput" class="hidden" onchange="handleFileSelect(this)">
+                </label>
+                <div style="text-align: center;">
+                    <button class="action-btn" style="width: auto; padding: 0 20px;" onclick="analyzeFile()">
+                        Start Analysis
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    // Auto-resize textarea
+    function autoResize(el) {
+        el.style.height = 'auto';
+        el.style.height = el.scrollHeight + 'px';
+    }
+
+    // File selection handler
+    function handleFileSelect(input) {
+        const fileName = input.files[0]?.name || "Click to upload PDF or DOCX";
+        document.getElementById('fileName').textContent = fileName;
+    }
+
+    // Markdown configuration
+    marked.setOptions({
+        breaks: true,
+        gfm: true
+    });
+
+    // UI Helpers
+    function addMessage(text, type="agent", isHtml=false) {
+        const chat = document.getElementById("chat");
+        const msgDiv = document.createElement("div");
+        msgDiv.className = "message";
+        
+        const icon = type === "user" ? "fa-user" : "fa-robot";
+        const avatarClass = type === "user" ? "avatar user" : "avatar agent";
+        
+        // Parse Markdown if agent
+        let content = text;
+        if (type === "agent" && !isHtml) {
+            content = marked.parse(text);
+        }
+
+        msgDiv.innerHTML = `
+            <div class="${avatarClass}"><i class="fa-solid ${icon}"></i></div>
+            <div class="msg-content">${content}</div>
+        `;
+        
+        chat.appendChild(msgDiv);
+        chat.scrollTop = chat.scrollHeight;
+        return msgDiv;
+    }
+
+    function showLoading() {
+        const chat = document.getElementById("chat");
+        const id = "loading-" + Date.now();
+        const msgDiv = document.createElement("div");
+        msgDiv.className = "message";
+        msgDiv.id = id;
+        msgDiv.innerHTML = `
+            <div class="avatar agent"><i class="fa-solid fa-robot"></i></div>
+            <div class="msg-content">
+                <div class="typing-indicator">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+        `;
+        chat.appendChild(msgDiv);
+        chat.scrollTop = chat.scrollHeight;
+        return id;
+    }
+
+    function removeLoading(id) {
+        const el = document.getElementById(id);
+        if (el) el.remove();
+    }
+
+    function updateFlow(step) {
+        document.querySelectorAll('.step').forEach((el, index) => {
+            if (index + 1 === step) el.classList.add('active');
+            else el.classList.remove('active');
+        });
+    }
+
+    // Mode Switching
+    function switchMode(mode) {
+        const topicMode = document.getElementById("topicMode");
+        const docMode = document.getElementById("documentMode");
+        const navTopic = document.getElementById("nav-topic");
+        const navDoc = document.getElementById("nav-doc");
+        const title = document.getElementById("pageTitle");
+
+        if (mode === "topic") {
+            topicMode.classList.remove("hidden");
+            docMode.classList.add("hidden");
+            navTopic.classList.add("active");
+            navDoc.classList.remove("active");
+            title.textContent = "Deep Research Project";
+            document.getElementById("flowIndicator").style.opacity = "1";
+        } else {
+            docMode.classList.remove("hidden");
+            topicMode.classList.add("hidden");
+            navDoc.classList.add("active");
+            navTopic.classList.remove("active");
+            title.textContent = "Document Analysis";
+            document.getElementById("flowIndicator").style.opacity = "0";
+        }
+    }
+
+    // API Interactions
+    async function runResearch() {
+        const input = document.getElementById("topicInput");
+        const topic = input.value.trim();
+        if (!topic) return;
+
+        addMessage(topic, "user");
+        input.value = "";
+        input.style.height = "auto";
+        
+        updateFlow(2); // Analysis phase
+        const loadId = showLoading();
+
+        const formData = new FormData();
+        formData.append("topic", topic);
+
+        try {
+            const response = await fetch("/run", {
+                method: "POST",
+                body: formData
+            });
+            const data = await response.json();
+            
+            removeLoading(loadId);
+            updateFlow(3); // Report phase
+
+            if (data.report) {
+                addMessage(data.report, "agent");
+            } else {
+                addMessage("⚠️ No report generated.", "agent");
+            }
+
+            if (data.companion_feedback) {
+                setTimeout(() => {
+                    addMessage("### 🧠 Companion Feedback\n" + data.companion_feedback, "agent");
+                }, 1000);
+            }
+
+        } catch (err) {
+            removeLoading(loadId);
+            addMessage("❌ Error connecting to server.", "agent");
+            console.error(err);
+        }
+    }
+
+    async function analyzeFile() {
+        const fileInput = document.getElementById("fileInput");
+        const file = fileInput.files[0];
+        if (!file) {
+            alert("Please select a file first.");
+            return;
+        }
+
+        addMessage(`📂 Uploaded: **${file.name}**`, "user");
+        const loadId = showLoading();
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+            const response = await fetch("/analyze_document", {
+                method: "POST",
+                body: formData
+            });
+            const data = await response.json();
+            
+            removeLoading(loadId);
+
+            if (data.analysis) {
+                addMessage(data.analysis, "agent");
+                
+                // Extract score if present (simple regex check)
+                const scoreMatch = data.analysis.match(/Score.*?(\d+)\/100/i);
+                if (scoreMatch) {
+                    const score = parseInt(scoreMatch[1]);
+                    showScoreWidget(score);
+                }
+            } else {
+                addMessage("⚠️ Analysis failed.", "agent");
+            }
+
+        } catch (err) {
+            removeLoading(loadId);
+            addMessage("❌ Error uploading file.", "agent");
+        }
+    }
+
+    function showScoreWidget(score) {
+        const html = `
+            <div class="score-container">
+                <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                    <strong>Publication Readiness Score</strong>
+                    <strong>${score}/100</strong>
+                </div>
+                <div class="score-bar-bg">
+                    <div class="score-bar-fill" style="width: ${score}%"></div>
+                </div>
+            </div>
+        `;
+        addMessage(html, "agent", true);
+    }
+
+</script>
+
+</body>
+</html>
